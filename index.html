@@ -311,7 +311,7 @@
 //    console.log( theEvent );
 //    console.log( theEvent.path[0].id );
 
-    IDtoMove = theEvent.path[0].id;
+      IDtoMove = theEvent.toElement.id;
 
     if ( theEvent.shiftKey ) {
       let temporaryVariableWeOnlyNeedForAMoment = document.getElementById(IDtoMove).style.width;
