@@ -1,0 +1,459 @@
+<htmL>
+<head>
+</head>
+<body onload="initApp()" onmousemove="mouseMoved(event)" onmouseup="furnitureDrop()">
+<!-- <body onload="initApp()"> -->
+  <style>
+
+  .furn {
+    display: flex;
+    border: solid thin;
+    position: absolute;
+    margin: 0 auto;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+  }
+
+  .apartmentFloor {
+    position: absolute;
+    background-color: lightgray;
+  }
+
+  .apartmentVoid {
+    position: absolute;
+    background-color: white;
+  }
+
+  .niftyButton {
+      border: solid thin;
+      margin: 0.5vh;
+      border-radius: 10px;
+      padding: 0.3vh 0.7vh;
+      text-align: center;
+      box-shadow: 0.2vh 0.4vh;
+      background-color: white;
+      width: 200px;
+  }
+
+  .niftyButton:active {
+      background-color: lightgrey;
+      box-shadow: 0.1vh 0.2vh;
+      transform: translateX( 2px);
+      transform: translateY( 2px);
+
+  }
+
+  </style>
+
+
+<script>
+
+  furniturePieces = [
+    {
+        "name": "China<br>Cabinet",
+        "xPos": 25,
+        "yPos": 65,
+        "height": 216,
+        "width": 60,
+        "color": 'brown'
+    },
+    {
+        "name": "Large Buffet",
+        "xPos": 125,
+        "yPos": 225,
+        "height": 219,
+        "width": 69,
+        "color": 'grey'
+    },
+    {
+        "name": "Dining Table",
+        "xPos": 125,
+        "yPos": 225,
+        "height": 258,
+        "width": 135,
+        "color": 'brown'
+    },
+    {
+        "name": "Black Shelves",
+        "xPos": 125,
+        "yPos": 225,
+        "height": 69,
+        "width": 36,
+        "color": 'dimgrey'
+    },
+    {
+        "name": "Small Buffet",
+        "xPos": 125,
+        "yPos": 225,
+        "height": 117,
+        "width": 54,
+        "color": 'burlywood'
+    },
+    {
+        "name": "Love Seat",
+        "xPos": 125,
+        "yPos": 225,
+        "height": 117,
+        "width": 192,
+        "color": 'lightgreen'
+    },
+    {
+        "name": "Game Table",
+        "xPos": 125,
+        "yPos": 225,
+        "height": 96,
+        "width": 96,
+        "color": 'beige'
+    },
+    {
+        "name": "Dressing Table",
+        "xPos": 125,
+        "yPos": 225,
+        "height": 135,
+        "width": 63,
+        "color": 'beige'
+    },
+    {
+        "name": "Bean Bin",
+        "xPos": 125,
+        "yPos": 225,
+        "height": 75,
+        "width": 48,
+        "color": 'chocolate'
+    },
+    {
+        "name": "Rolling Cart",
+        "xPos": 125,
+        "yPos": 225,
+        "height": 84,
+        "width": 60,
+        "color": 'tan'
+    },
+    {
+        "name": "Tall Dresser",
+        "xPos": 125,
+        "yPos": 225,
+        "height": 60,
+        "width": 108,
+        "color": 'darkgrey'
+    },
+    {
+        "name": "Short Dresser",
+        "xPos": 125,
+        "yPos": 225,
+        "height": 63,
+        "width": 126,
+        "color": 'beige'
+    },
+    {
+        "name": "Step End Table",
+        "xPos": 0,
+        "yPos": 500,
+        "height": 96,
+        "width": 57,
+        "color": 'khaki'
+    },
+    {
+        "name": "Tall Book Shelf",
+        "xPos": 0,
+        "yPos": 500,
+        "height": 94,
+        "width": 36,
+        "color": 'khaki'
+    },
+    {
+        "name": "Tall Book Shelf",
+        "xPos": 0,
+        "yPos": 500,
+        "height": 94,
+        "width": 36,
+        "color": 'khaki'
+    },
+    {
+        "name": "Tall Book Shelf",
+        "xPos": 0,
+        "yPos": 500,
+        "height": 94,
+        "width": 36,
+        "color": 'khaki'
+    },
+    {
+        "name": "Triangle Table",
+        "xPos": 0,
+        "yPos": 500,
+        "height": 90,
+        "width": 90,
+        "color": 'khaki'
+    },
+    {
+        "name": "Bed",
+        "xPos": 0,
+        "yPos": 500,
+        "height": 108,
+        "width": 264,
+        "color": 'khaki'
+    },
+    {
+        "name": "Recliner",
+        "xPos": 0,
+        "yPos": 500,
+        "height": 102,
+        "width": 216,
+        "color": 'purple'
+    },
+    {
+        "name": "",
+        "xPos": 0,
+        "yPos": 0,
+        "height": 0,
+        "width": 0,
+        "color": 'purple'
+    },
+    {
+        "name": "",
+        "xPos": 0,
+        "yPos": 0,
+        "height": 0,
+        "width": 0,
+        "color": 'purple'
+    },
+    {
+        "name": "",
+        "xPos": 0,
+        "yPos": 0,
+        "height": 0,
+        "width": 0,
+        "color": 'purple'
+    },
+    {
+        "name": "",
+        "xPos": 0,
+        "yPos": 0,
+        "height": 0,
+        "width": 0,
+        "color": 'purple'
+    },
+    {
+        "name": "",
+        "xPos": 0,
+        "yPos": 0,
+        "height": 0,
+        "width": 0,
+        "color": 'purple'
+    },
+    {
+        "name": "",
+        "xPos": 0,
+        "yPos": 0,
+        "height": 0,
+        "width": 0,
+        "color": 'purple'
+    },
+    {
+        "name": "",
+        "xPos": 0,
+        "yPos": 0,
+        "height": 0,
+        "width": 0,
+        "color": 'purple'
+    },
+    {
+        "name": "",
+        "xPos": 0,
+        "yPos": 0,
+        "height": 0,
+        "width": 0,
+        "color": 'purple'
+    },
+    {
+        "name": "",
+        "xPos": 600,
+        "yPos": 500,
+        "height": 90,
+        "width": 90,
+        "color": 'pink'
+    }
+
+  ];
+
+  fpMoving = '';
+
+
+  function initApp () {
+
+//    document.onmousemove = mouseMoved();
+
+    for ( let i=0; i < furniturePieces.length; i++ ) {
+
+      newPieceString = '<div id="fp' + i + '"  class="furn" style="background-color: ' + furniturePieces[i].color + '; ';
+      newPieceString += 'top: ' + furniturePieces[i].yPos + '; left: ' + furniturePieces[i].xPos + ';';
+      newPieceString += 'height: ' + furniturePieces[i].height + ';';
+      newPieceString += 'width: ' + furniturePieces[i].width + ';"';
+      newPieceString += ' onmousedown = "furnitureGrab(event)" ';
+//      newPieceString += ' onmouseup = "furnitureDrop(event)" ';
+      newPieceString += '>' + furniturePieces[i].name + '</div>';
+
+      document.getElementById('theApt').innerHTML += newPieceString;
+
+    }
+
+    document.getElementById('fp'+(furniturePieces.length-1)).style.borderRadius = '45px';
+
+    importLocs();
+
+  }
+
+  function furnitureGrab( theEvent ) {
+
+//    console.log( theEvent );
+//    console.log( theEvent.path[0].id );
+
+    IDtoMove = theEvent.path[0].id;
+
+    if ( theEvent.shiftKey ) {
+      let temporaryVariableWeOnlyNeedForAMoment = document.getElementById(IDtoMove).style.width;
+      document.getElementById(IDtoMove).style.width = document.getElementById(IDtoMove).style.height;
+      document.getElementById(IDtoMove).style.height = temporaryVariableWeOnlyNeedForAMoment;
+      furniturePieces[ parseInt( IDtoMove.substr(2,999) ) ].width = document.getElementById(IDtoMove).style.width;
+      furniturePieces[ parseInt( IDtoMove.substr(2,999) ) ].height = document.getElementById(IDtoMove).style.height;
+      return;
+    }
+
+    fpMoving = IDtoMove;
+
+
+//    document.onmousemove = 'mouseMoved()';
+  }
+
+  function furnitureDrop() {
+    fpMoving = '';
+//    document.onmousemove = '';
+  }
+
+  function mouseMoved( theEvent ) {
+
+    if (fpMoving=='') {
+      return;
+    }
+
+//    console.log( fpMoving );
+
+    theEvent = theEvent || window.event;
+    theEvent.preventDefault();
+
+//    console.log(theEvent.movementX);
+//    console.log(theEvent.movementY);
+
+    currentX = parseInt(document.getElementById( fpMoving ).style.left);
+//console.log(currentX);
+//    currentX = currentX.substring( 0, currentX.length - 2 );
+
+    currentY = parseInt(document.getElementById( fpMoving ).style.top);
+//    currentY = currentX.substring( 0, currentY.length - 2 );
+
+//    console.log( currentX );
+
+    newX = currentX + theEvent.movementX;
+    newY = currentY + theEvent.movementY;
+
+
+    whichPiece = parseInt( fpMoving.substring( 2, fpMoving.length) );
+//    console.log(whichPiece);
+    furniturePieces[ whichPiece ].xPos = newX;
+    furniturePieces[ whichPiece ].yPos = newY;
+
+
+    document.getElementById( fpMoving ).style.left = newX + 'px';
+    document.getElementById( fpMoving ).style.top = newY + 'px';
+
+    document.getElementById('exportArea').value = JSON.stringify( furniturePieces );
+
+  }
+
+  function importLocs() {
+
+    furniturePieces = JSON.parse( document.getElementById('exportArea').value );
+
+    restoreLocs();
+
+  }
+
+  function saveLocs() {
+    localStorage.newAptLocs = JSON.stringify(furniturePieces);
+  }
+
+  function loadLocs() {
+    furniturePieces = JSON.parse( localStorage.newAptLocs );
+
+    restoreLocs();
+
+    document.getElementById('exportArea').value = JSON.stringify( furniturePieces );
+
+  }
+
+  function restoreLocs() {
+
+    for ( let i = 0; i< furniturePieces.length; i++ ) {
+
+      document.getElementById('fp'+i).style.left = furniturePieces[i].xPos;
+      document.getElementById('fp'+i).style.top = furniturePieces[i].yPos;
+      document.getElementById('fp'+i).style.height = furniturePieces[i].height;
+      document.getElementById('fp'+i).style.width = furniturePieces[i].width;
+
+    }
+
+  }
+
+</script>
+
+
+  <p>
+    Drag the furniture around to test a layout. Shift click to rotate the furniture. The pink circle is a 30"
+    tester to see if a passage is comfortable. You can save the current arrangement with the Save button, and load
+    the previously saved arrangement with Load. Copy the gobbledygook and you can email that to someone else to share
+    an arrangement (if you save it in a document somewhere that's also a way to save more than one arangement). When you
+    receive a saved arrangement paste it in the text area and click Import.
+    Be sure to copy and paste the entire contents of the text area.
+  </p>
+
+  <div id='theApt' style='position: relative; height: 546px; width: 861px; border: solid thin; background-color: lightgray'>
+
+    <!-- <div id="tester" style='position: absolute; bottom: 0; height: 90px; width: 90px; border-radius: 45px; border: solid thin; background-color: pink; z-index:999;' onmousedown="moveTester()"></div> -->
+
+    <!-- bedroom cutout -->
+        <div class='apartmentVoid' style='border-top: solid; border-right: solid; height: 18; width: 36; bottom: 0; left: 0'></div>
+    <!-- living room cutout -->
+        <div class='apartmentVoid' style='border-top: solid; border-right: solid;  border-left: solid; height: 18; width: 78; bottom: 0; left: 489'></div>
+<!-- inner wall     -->
+    <div class='apartmentVoid' style='border-top: solid; border-right: solid; border-left: solid; height: 396; width: 12; bottom: 0; left: 342'></div>
+    <div class='apartmentVoid' style='border-bottom: solid; height: 46; width: 342; bottom: 500; left: 0'></div>
+    <div class='apartmentVoid' style='border-bottom: solid; border-right: solid; border-left: solid; height: 80; width: 12; bottom: 419; left: 243'></div>
+    <!-- above inner wall -->
+    <div class='apartmentVoid' style='border-bottom: solid; border-right: solid; border-left: solid; height: 61; width: 12; bottom: 486; left: 342'></div>
+    <!-- kitchen column -->
+    <div class='apartmentVoid' style='border-bottom: solid; border-right: solid; border-left: solid; height: 27; width: 27; top: 0; right: 270'></div>
+
+<!-- doors -->
+    <div class='apartmentVoid' style='border: solid thin; height: 4; width: 125; bottom: 417; left: 4'></div>
+    <div class='apartmentVoid' style='border: solid thin; height: 4; width: 125; bottom: 423; left: 109'></div>
+    <div class='apartmentVoid' style='border: solid thin; height: 4; width: 90; bottom: 446; left: 270; transform: rotate(-45deg);'></div>
+<!-- windows -->
+<div class='apartmentVoid' style='border: solid thin; height: 6; width: 132; bottom: -5; left: 36; background-color: lightblue'></div>
+<div class='apartmentVoid' style='border: solid thin; height: 6; width: 132; bottom: -5; left: 356; background-color: lightblue'></div>
+<div class='apartmentVoid' style='border: solid thin; height: 6; width: 132; bottom: -5; left: 569; background-color: lightblue'></div>
+
+
+  </div>
+<br><br>
+  <textarea id='exportArea' style='border: solid thin;' rows=5 cols=80 >
+[{"name":"China<br>Cabinet","xPos":793,"yPos":6,"height":216,"width":60,"color":"brown"},{"name":"Large Buffet","xPos":784,"yPos":320,"height":219,"width":69,"color":"grey"},{"name":"Dining Table","xPos":605,"yPos":56,"height":258,"width":135,"color":"brown"},{"name":"black shelves","xPos":814,"yPos":236,"height":69,"width":36,"color":"dark grey"},{"name":"Small Buffet","xPos":958,"yPos":506,"height":"54px","width":"117px","color":"lightbrown"},{"name":"love seat","xPos":392,"yPos":400,"height":"117px","width":"192px","color":"lightgreen"},{"name":"Game Table","xPos":1001,"yPos":156,"height":96,"width":96,"color":"beige"},{"name":"Dressing Table","xPos":201,"yPos":479,"height":"63px","width":"135px","color":"beige"},{"name":"Bean Bin","xPos":594,"yPos":407,"height":75,"width":48,"color":"darkbrown"},{"name":"Rolling Cart","xPos":1067,"yPos":430,"height":"60px","width":"84px","color":"tan"},{"name":"Tall Dresser","xPos":3,"yPos":169,"height":"108px","width":"60px","color":"darkgrey"},{"name":"Short Dresser","xPos":111,"yPos":48,"height":63,"width":126,"color":"beige"},{"name":"Step End Table","xPos":1,"yPos":399,"height":"57px","width":"96px","color":"khaki"},{"name":"Tall Book Shelf","xPos":360,"yPos":200,"height":94,"width":36,"color":"khaki"},{"name":"Tall Book Shelf","xPos":1048,"yPos":309,"height":"36px","width":"94px","color":"khaki"},{"name":"Tall Book Shelf","xPos":358,"yPos":299,"height":94,"width":36,"color":"khaki"},{"name":"Triangle Table","xPos":920,"yPos":280,"height":90,"width":90,"color":"khaki"},{"name":"Bed","xPos":1,"yPos":285,"height":108,"width":264,"color":"khaki"},{"name":"Recliner","xPos":435,"yPos":118,"height":"216px","width":"102px","color":"purple"},{"name":"","xPos":0,"yPos":0,"height":0,"width":0,"color":"purple"},{"name":"","xPos":0,"yPos":0,"height":0,"width":0,"color":"purple"},{"name":"","xPos":0,"yPos":0,"height":0,"width":0,"color":"purple"},{"name":"","xPos":0,"yPos":0,"height":0,"width":0,"color":"purple"},{"name":"","xPos":0,"yPos":0,"height":0,"width":0,"color":"purple"},{"name":"","xPos":0,"yPos":0,"height":0,"width":0,"color":"purple"},{"name":"","xPos":0,"yPos":0,"height":0,"width":0,"color":"purple"},{"name":"","xPos":0,"yPos":0,"height":0,"width":0,"color":"purple"},{"name":"","xPos":890,"yPos":387,"height":90,"width":90,"color":"pink"}]
+  </textarea>
+
+  <div class='niftyButton' onclick='importLocs()'>Import</div>
+  <div class='niftyButton' onclick='saveLocs()'>Save</div>
+  <div class='niftyButton' onclick='loadLocs()'>Load</div>
+
+</body>
+</html>
